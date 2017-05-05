@@ -79,14 +79,18 @@ Total time: 8 seconds
 
 
 ```
-├── server
-│   ├── core
-│   │   ├── MainSever.jar
-    │   │── LogSever.jar
-    │   │── SecuritySever.jar
-│   └── data
-│       ├── map
-│       └── minimap
+└── server
+    ├── core
+    │   └── 1.0.564823.1
+    │       ├── LoggerServer.jar
+    │       ├── MainServer.jar
+    │       └── SecuityServer.jar
+    └── data
+        ├── gamecfg.dat
+        ├── map
+        ├── minimap
+        ├── sys_store.xlsx
+        └── version.dat
 ```
 
 
