@@ -53,8 +53,8 @@ mkdir data
 echo "开始创建data目录"
 cd /Users/xiaomo/IdeaProjects/MIR/config
 cd data
-svn up
 echo "开始拉取最新data配置"
+svn up
 cd ..
 # 8. 拷贝data配置
 echo "开始拷贝data配置到version目录"
