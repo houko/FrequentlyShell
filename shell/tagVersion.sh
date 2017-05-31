@@ -7,7 +7,7 @@ if [ $# == 0 ]
 fi
 
 # 2. 新建目录
-cd /Users/xiaomo/IdeaProjects/lscq/version
+cd /Users/xiaomo/IdeaProjects/version
 if [ ! -d $1 ]; then
       mkdir $1 && cd $1
       echo "版本号根目录不存在,现在开始创建版本号根目录-------> $1 ,(服务端和客户端谁先截版谁先建根目录版本号,版本号为1.0.x.y,x为最终提交的svn版本号,y为截版更新次数)"
@@ -43,9 +43,9 @@ ant
 # 6.拷贝jar包
 cd bin
 echo " 开始拷贝jar包到指定目录"
-cp -R *.jar /Users/xiaomo/IdeaProjects/lscq/version/$1/server/core/$1
+cp -R *.jar /Users/xiaomo/IdeaProjects/version/$1/server/core/$1
 
-cd /Users/xiaomo/IdeaProjects/lscq/version/$1/server
+cd /Users/xiaomo/IdeaProjects/version/$1/server
 
 # 7.创建data目录 ...../version/server/data
 if [ ! -d data ]; then
@@ -58,7 +58,7 @@ svn up
 cd ..
 # 8. 拷贝data配置
 echo "开始拷贝data配置到version目录"
-cp -R data/* /Users/xiaomo/IdeaProjects/lscq/version/$1/server/data
+cp -R data/* /Users/xiaomo/IdeaProjects/version/$1/server/data
 else
    echo "data 目录己存在"
 fi
