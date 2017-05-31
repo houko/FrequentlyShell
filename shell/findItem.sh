@@ -1,4 +1,4 @@
-#!/usr/bin/bash
+#!/bin/bash
 pefix="log_useitem_"
 sql=""
 for((i=$1;i<=$2;i=$i+86400))
