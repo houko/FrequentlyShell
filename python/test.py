@@ -1,2 +1,2 @@
-#/usr/bin/python
-print "my first python script"
+# /usr/bin/python
+print("my first python script")
