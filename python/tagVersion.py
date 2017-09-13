@@ -1,4 +1,5 @@
 #! /usr/bin/python3
+# coding=utf-8
 
 """
  把今天最好的表现当作明天最新的起点．．～
