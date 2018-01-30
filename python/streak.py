@@ -10,7 +10,7 @@
  email: xiaomo@xiamoo.info
  QQ_NO: 83387856
  Date: 2018/1/30 16:01 
- Description:  给github 加commit
+ Description:  给github 加commit (linux/mac可用,windows的win32api不好用没加)
  Copyright(©) 2017 by xiaomo.
 """
 import datetime
