@@ -47,18 +47,19 @@ def create_dir():
     os.chdir(versionBasePath)
     os.system("svn up")
     version = sys.argv[1]
+
     if os.path.exists(version):
         print("文件夹己存在")
-        exit(1)
     else:
         os.makedirs(version, 0o700, False)
-        os.chdir(version)
-        os.makedirs("server", 0o700, True)
-        os.chdir("server")
-        os.makedirs("core", 0o700, True)
-        os.chdir("core")
-        os.makedirs(version, 0o700, True)
-        os.chdir(version)
+
+    os.chdir(version)
+    os.makedirs("server", 0o700, True)
+    os.chdir("server")
+    os.makedirs("core", 0o700, True)
+    os.chdir("core")
+    os.makedirs(version, 0o700, True)
+    os.chdir(version)
 
 
 # 编译jar包
