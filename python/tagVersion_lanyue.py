@@ -57,6 +57,7 @@ def create_dir():
 def compile_jar():
     os.chdir(jarBasePath)
     os.system("git checkout master")
+    os.system("git pull")
     os.system("mvn clean package")
 
 
