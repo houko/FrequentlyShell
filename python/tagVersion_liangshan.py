@@ -11,14 +11,13 @@
  email: xiaomo@xiamoo.info
  QQ_NO: 83387856
  Date: 17/5/31 14:53 
- Description: 
+ Description: 梁山传奇打版本
  Copyright(©) 2017 by xiaomo.
 """
 
+import os
 import shutil
 import sys
-
-import os
 
 versionBasePath = "/Users/xiaomo/IdeaProjects/version"
 jarBasePath = "/Users/xiaomo/IdeaProjects/MIR/server/release"
