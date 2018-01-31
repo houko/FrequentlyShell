@@ -19,9 +19,9 @@ import os
 import shutil
 import sys
 
-versionBasePath = "/data/game/server/miracle-version"
-jarBasePath = "/data/game/server/miracle-server"
-dataBasePath = "/data/game/server/miracle-data"
+versionBasePath = "/data/game/server/miracle-version/"
+jarBasePath = "/data/game/server/miracle-server/"
+dataBasePath = "/data/game/server/miracle-data/"
 
 
 # 检查是否正确
@@ -30,15 +30,14 @@ def check_param():
         print("Usage: python tagVersion_lanyue.py version")
         exit(1)
     else:
-        print("开始执行脚本:'" + sys.argv[0] + "', 版本号为:")
         for i in range(1, len(sys.argv)):
             print(sys.argv[i], end=' ')
 
 
 # 创建文件夹
 def create_dir():
-    print("开始创建文件夹")
     os.chdir(versionBasePath)
+    os.system("svn up")
     version = sys.argv[1]
     if os.path.exists(version):
         print("文件夹己存在")
@@ -67,16 +66,12 @@ def copy_jar():
     print("版本为 %s" % version)
 
     # 拷贝game包
-    game_server_url = jarBasePath + "/game-codex/target/game-server-0.0.1.jar"
-    game_file_list = os.listdir(game_server_url)
-    for file in game_file_list:
-        shutil.copy(file, versionBasePath + version + "/server/core/" + version)
+    game_server_url = jarBasePath + "game-codex/target/game-server-0.0.1.jar"
+    shutil.copy(game_server_url, versionBasePath + version + "/server/core/" + version)
 
     # 拷贝 api包
-    game_api_url = jarBasePath + "/game-api/target/game-api-0.0.1.jar"
-    api_file_list = os.listdir(game_api_url)
-    for file in api_file_list:
-        shutil.copy(file, versionBasePath + version + "/server/core/" + version)
+    api_file_list = jarBasePath + "game-api/target/game-api-0.0.1.jar"
+    shutil.copy(api_file_list, versionBasePath + version + "/server/core/" + version)
 
 
 # 拷贝jqr包
@@ -92,10 +87,15 @@ def copy_data():
 
 # 执行
 def main():
+    print("----------------开始执行脚本:'%s', 版本号为: %s -------------------" % (sys.argv[0], sys.argv[1]))
     check_param()
+    print("----------------------编译jar包----------------------------------")
     compile_jar()
+    print("----------------------创建目录----------------------------------")
     create_dir()
+    print("----------------------拷贝jqr包---------------------------------")
     copy_jar()
+    print("----------------------编译配置表----------------------------------")
     copy_data()
     print("\n脚本执行完毕")
 
