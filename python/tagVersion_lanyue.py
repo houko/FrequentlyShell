@@ -19,9 +19,20 @@ import os
 import shutil
 import sys
 
+# 打版本根目录
 versionBasePath = "/data/game/server/miracle-version/"
-jarBasePath = "/data/game/server/miracle-server/"
+# 服务端代码根目录
+serverBasePath = "/data/game/server/miracle-server/"
+# 配置表根目录
 dataBasePath = "/data/game/server/miracle-data/"
+# 版本号
+version_num = ""
+# 目录版本的路径
+target_version_url = ""
+# 游戏包jar
+game_server_url = serverBasePath + "game-codex/target/game-server-0.0.1.jar"
+# api包jar
+api_file_list = serverBasePath + "game-api/target/game-api-0.0.1.jar"
 
 
 # 检查是否正确
@@ -30,8 +41,8 @@ def check_param():
         print("Usage: python tagVersion_lanyue.py version")
         exit(1)
     else:
-        for i in range(1, len(sys.argv)):
-            print(sys.argv[i], end=' ')
+        version_num = sys.argv[1]
+        target_version_url = versionBasePath + version_num + "/server/core/" + version_num
 
 
 # 创建文件夹
@@ -55,7 +66,7 @@ def create_dir():
 
 # 编译jar包
 def compile_jar():
-    os.chdir(jarBasePath)
+    os.chdir(serverBasePath)
     os.system("git checkout master")
     os.system("git pull")
     os.system("mvn clean package")
@@ -63,27 +74,28 @@ def compile_jar():
 
 # 拷贝Jar包
 def copy_jar():
-    version = sys.argv[1]
-    print("版本为 %s" % version)
-
+    print("版本为 %s" % version_num)
     # 拷贝game包
-    game_server_url = jarBasePath + "game-codex/target/game-server-0.0.1.jar"
-    shutil.copy(game_server_url, versionBasePath + version + "/server/core/" + version)
-
+    shutil.copy(game_server_url, target_version_url)
     # 拷贝 api包
-    api_file_list = jarBasePath + "game-api/target/game-api-0.0.1.jar"
-    shutil.copy(api_file_list, versionBasePath + version + "/server/core/" + version)
+    shutil.copy(api_file_list, target_version_url)
 
 
 # 拷贝jqr包
 def copy_data():
-    version = sys.argv[1]
     os.chdir(dataBasePath)
     os.system("git pull")
-    target = versionBasePath + version + "/server/data"
+    target = versionBasePath + version_num + "/server/data"
     shutil.copytree(dataBasePath, target)
     os.chdir(target)
     os.system("rm -rf .git")
+
+
+def submit_svn():
+    os.chdir(versionBasePath)
+    os.system("svn up")
+    os.system("svn st | grep '^\?' | tr '^\?' ' ' | sed 's/[ ]*//' | sed 's/[ ]/\\ /g' | xargs svn add ")
+    os.system("svn commit -m " + version_num + " --force-log")
 
 
 # 执行
@@ -98,6 +110,8 @@ def main():
     copy_jar()
     print("----------------------编译配置表----------------------------------")
     copy_data()
+    print("----------------------提交svn代码----------------------------------")
+    submit_svn()
     print("\n脚本执行完毕")
 
 
