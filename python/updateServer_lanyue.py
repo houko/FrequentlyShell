@@ -20,6 +20,10 @@ import shutil
 
 import sys
 
+if len(sys.argv) < 2 or len(sys.argv) > 3:
+    print("Usage: python updateServer_lanyue.py version")
+    exit(1)
+
 # 开服/关服脚本
 shell_path = "/data/game/server/s1/bin/serverOption.sh"
 # 目标根路径

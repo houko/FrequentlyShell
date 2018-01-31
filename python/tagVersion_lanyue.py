@@ -27,6 +27,11 @@ serverBasePath = "/data/game/server/miracle-server/"
 dataBasePath = "/data/game/server/miracle-data/"
 # 目标版本位置
 run_base_url = "data/game/server/s1/"
+
+if len(sys.argv) < 2 or len(sys.argv) > 3:
+    print("Usage: python tagVersion_lanyue.py version")
+    exit(1)
+
 # 版本号
 version_num = sys.argv[1]
 # 目录版本的路径
@@ -35,13 +40,6 @@ target_version_url = (versionBasePath + version_num + "/server/core/" + version_
 game_server_url = serverBasePath + "game-codex/target/game-server-0.0.1.jar"
 # api包jar
 api_file_list = serverBasePath + "game-api/target/game-api-0.0.1.jar"
-
-
-# 检查是否正确
-def check_param():
-    if len(sys.argv) < 2 or len(sys.argv) > 3:
-        print("Usage: python tagVersion_lanyue.py version")
-        exit(1)
 
 
 # 创建文件夹
@@ -123,7 +121,6 @@ def submit_svn():
 # 执行
 def main():
     print("----------------开始执行脚本:'%s', 版本号为: %s -------------------" % (sys.argv[0], sys.argv[1]))
-    check_param()
     print("----------------------编译jar包----------------------------------")
     compile_jar()
     print("----------------------打tag----------------------------------")
