@@ -25,6 +25,8 @@ versionBasePath = "/data/game/server/miracle-version/"
 serverBasePath = "/data/game/server/miracle-server/"
 # 配置表根目录
 dataBasePath = "/data/game/server/miracle-data/"
+# 目标版本位置
+run_base_url = "data/game/server/s1/"
 # 版本号
 version_num = sys.argv[1]
 # 目录版本的路径
@@ -104,6 +106,13 @@ def copy_data():
     os.system("rm -rf .git")
 
 
+# 修改版本号
+def change_version():
+    os.chdir(run_base_url)
+    with open('version', 'w', encoding='utf-8') as f:
+        f.write(version_num)
+
+
 def submit_svn():
     os.chdir(versionBasePath)
     os.system("svn up")
@@ -125,6 +134,8 @@ def main():
     copy_jar()
     print("----------------------编译配置表----------------------------------")
     copy_data()
+    print("----------------------修改版本号----------------------------------")
+    change_version()
     print("----------------------提交svn代码----------------------------------")
     submit_svn()
     print("\n脚本执行完毕")

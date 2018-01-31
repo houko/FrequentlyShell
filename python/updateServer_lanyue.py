@@ -16,41 +16,78 @@
 """
 
 import os
+import shutil
 
 import sys
 
+# 开服/关服脚本
+shell_path = "/data/game/server/s1/bin/serverOption.sh"
+# 目标根路径
+target_base_url = "/data/game/server/s1/"
+# 目标jar的路径
+target_jar_path = target_base_url + "core/"
+# 配置表根目录
+target_data_base_path = target_base_url + "data/"
+# 版本号
+version = sys.argv[1][:-4]
 
+
+# 解压文件
 def un_tar_file():
-    os.system("tar -zxvf" + sys.argv[1])
+    os.system("unzip " + sys.argv[1])
 
 
+# 关服
 def close_server():
-    os.system("sh /data/game/server/s1/bin/serverOption.sh all stop")
+    os.system("sh " + shell_path + " all stop")
 
 
+# 拷贝文件
 def update_code():
-    os.system("cd /data/game/s1/dev_control/servercode")
-    os.system("svn up")
+    # 处理jar包
+    os.chdir(target_jar_path)
+    os.system("rm -rf *.jar")
+    os.chdir("/root/" + version + "/server/core/" + version)
+    files = os.listdir(os.getcwd())
+    for file in files:
+        shutil.copy(file, target_jar_path)
+
+    # 处理配置表
+    os.chdir(target_base_url)
+    os.system("rm -rf data")
+    source_data_url = "/root/" + version + "/server/data"
+    shutil.copytree(source_data_url, target_data_base_path)
+    os.chdir(target_data_base_path)
+    os.system("rm -rf .git")
 
 
-def compile_jar():
-    os.system("cd /data/game/s1/dev_control/servercode/release")
-    os.system("ant")
-
-
-def copy_jar():
-    os.system("cp -f /data/game/s1/dev_control/servercode/release/bin/* /data/game/s1/server/core/1.0.1.0")
+# 修改版本号
+def change_version():
+    os.chdir(target_base_url)
+    with open('version', 'w+', encoding='utf-8') as f:
+        f.write(version)
 
 
 def start_server():
-    os.system("sh /data/game/s1/dev_control/scripts/startServer.sh")
+    os.system("sh " + shell_path + " all stop")
 
-    print("解压")
+
+def main():
+    print("---------------------------------解压文件---------------------------------")
+    os.system("rm -rf " + version)
     un_tar_file()
-    update_code()
+    print("---------------------------------关闭服务器---------------------------------")
     close_server()
-    compile_jar()
+    print("---------------------------------更新jar包---------------------------------")
+    update_code()
+    print("---------------------------------修改版本号---------------------------------")
+    change_version()
+    print("---------------------------------开启服务器---------------------------------")
     start_server()
+    print("\n脚本执行完毕")
+    os.chdir("/root")
+    os.system("rm -rf " + version)
 
 
-print("\n脚本执行完毕")
+if __name__ == '__main__':
+    main()
