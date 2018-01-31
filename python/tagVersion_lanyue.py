@@ -73,12 +73,12 @@ def compile_jar():
 def tag_version():
     # 打服务端代码的tag
     os.chdir(serverBasePath)
-    os.system(" git tag" + version_num)
+    os.system(" git tag " + version_num)
     os.system("git push origin –-tags ")
 
     # 打配置表的tag
     os.chdir(dataBasePath)
-    os.system(" git tag" + version_num)
+    os.system(" git tag " + version_num)
     os.system("git push origin –-tags ")
 
 
