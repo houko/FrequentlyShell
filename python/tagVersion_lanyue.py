@@ -26,9 +26,9 @@ serverBasePath = "/data/game/server/miracle-server/"
 # 配置表根目录
 dataBasePath = "/data/game/server/miracle-data/"
 # 版本号
-version_num = ""
+version_num = sys.argv[1]
 # 目录版本的路径
-target_version_url = ""
+target_version_url = (versionBasePath + version_num + "/server/core/" + version_num)
 # 游戏包jar
 game_server_url = serverBasePath + "game-codex/target/game-server-0.0.1.jar"
 # api包jar
@@ -40,9 +40,6 @@ def check_param():
     if len(sys.argv) < 2 or len(sys.argv) > 3:
         print("Usage: python tagVersion_lanyue.py version")
         exit(1)
-    else:
-        version_num = sys.argv[1]
-        target_version_url = versionBasePath + version_num + "/server/core/" + version_num
 
 
 # 创建文件夹
@@ -70,6 +67,19 @@ def compile_jar():
     os.system("git checkout master")
     os.system("git pull")
     os.system("mvn clean package")
+
+
+# 打tag
+def tag_version():
+    # 打服务端代码的tag
+    os.chdir(serverBasePath)
+    os.system(" git tag" + version_num)
+    os.system("git push origin –-tags ")
+
+    # 打配置表的tag
+    os.chdir(dataBasePath)
+    os.system(" git tag" + version_num)
+    os.system("git push origin –-tags ")
 
 
 # 拷贝Jar包
@@ -104,9 +114,11 @@ def main():
     check_param()
     print("----------------------编译jar包----------------------------------")
     compile_jar()
+    print("----------------------打tag----------------------------------")
+    tag_version()
     print("----------------------创建目录----------------------------------")
     create_dir()
-    print("----------------------拷贝jqr包---------------------------------")
+    print("----------------------拷贝jar包---------------------------------")
     copy_jar()
     print("----------------------编译配置表----------------------------------")
     copy_data()
