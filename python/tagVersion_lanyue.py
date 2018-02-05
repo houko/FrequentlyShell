@@ -79,13 +79,13 @@ def tag_version():
     os.chdir(serverBasePath)
     os.system("git tag -l | xargs git tag -d")
     os.system(" git tag " + version_num)
-    os.system("git push –-tags ")
+    os.system("git push --tags ")
 
     # 打配置表的tag
     os.chdir(dataBasePath)
     os.system("git tag -l | xargs git tag -d")
     os.system(" git tag " + version_num)
-    os.system("git push –-tags ")
+    os.system("git push --tags ")
 
 
 # 拷贝Jar包
