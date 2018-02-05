@@ -25,7 +25,7 @@ if len(sys.argv) < 2 or len(sys.argv) > 3:
     exit(1)
 
 # 开服/关服脚本
-shell_path = "/data/game/server/s1/bin/serverOption.sh"
+shell_path = "/data/game/server/s1/bin/"
 # 目标根路径
 target_base_url = "/data/game/server/s1/"
 # 目标jar的路径
@@ -33,16 +33,12 @@ target_jar_path = target_base_url + "core/"
 # 配置表根目录
 target_data_base_path = target_base_url + "data/"
 # 版本号
-version = sys.argv[1][:-4]
-
-
-# 解压文件
-def un_tar_file():
-    os.system("unzip " + sys.argv[1])
+version = sys.argv[1]
 
 
 # 关服
 def close_server():
+    os.system("cd" + shell_path)
     os.system("sh " + shell_path + " all stop")
 
 
@@ -51,15 +47,17 @@ def update_code():
     # 处理jar包
     os.chdir(target_jar_path)
     os.system("rm -rf *.jar")
-    os.chdir("/root/" + version + "/server/core/" + version)
+    os.chdir("/root/version/" + version + "/server/core/" + version)
+    os.system("svn up")
     files = os.listdir(os.getcwd())
     for file in files:
-        shutil.copy(file, target_jar_path)
+        if file.endswith(".jar"):
+            shutil.copy(file, target_jar_path)
 
     # 处理配置表
     os.chdir(target_base_url)
     os.system("rm -rf data")
-    source_data_url = "/root/" + version + "/server/data"
+    source_data_url = "/root/version/" + version + "/server/data"
     shutil.copytree(source_data_url, target_data_base_path)
     os.chdir(target_data_base_path)
     os.system("rm -rf .git")
@@ -77,9 +75,7 @@ def start_server():
 
 
 def main():
-    print("---------------------------------解压文件---------------------------------")
     os.system("rm -rf " + version)
-    un_tar_file()
     print("---------------------------------关闭服务器---------------------------------")
     close_server()
     print("---------------------------------更新jar包---------------------------------")
@@ -89,8 +85,6 @@ def main():
     print("---------------------------------开启服务器---------------------------------")
     start_server()
     print("\n脚本执行完毕")
-    os.chdir("/root")
-    os.system("rm -rf " + version)
 
 
 if __name__ == '__main__':
