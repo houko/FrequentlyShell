@@ -52,5 +52,6 @@ def daily_commit(start_date, end_date):
         trick_commit(cur_date.year, cur_date.month, cur_date.day)
 
 
+# main
 if __name__ == '__main__':
     daily_commit(datetime.date(2015, 1, 1), datetime.date(2016, 1, 1))
