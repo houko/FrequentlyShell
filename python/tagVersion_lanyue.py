@@ -36,6 +36,8 @@ if len(sys.argv) < 2 or len(sys.argv) > 3:
 version_num = sys.argv[1]
 # 目录版本的路径
 target_version_url = (versionBasePath + version_num + "/server/core/" + version_num)
+# jar依赖
+target_libs_url = (versionBasePath + version_num + "/libs")
 # 游戏包jar
 game_server_url = serverBasePath + "game-codex/target/game-server-0.0.1.jar"
 # api包jar
@@ -54,6 +56,7 @@ def create_dir():
         os.makedirs(version, 0o700, False)
 
     os.chdir(version)
+    os.makedirs("libs", 0o700, True)
     os.makedirs("server", 0o700, True)
     os.chdir("server")
     os.makedirs("core", 0o700, True)
@@ -90,6 +93,8 @@ def copy_jar():
     print("版本为 %s" % version_num)
     # 拷贝game包
     shutil.copy(game_server_url, target_version_url)
+    # 拷贝jar
+    shutil.copy(game_server_url, target_libs_url)
     # 拷贝 api包
     shutil.copy(api_file_list, target_version_url)
 
