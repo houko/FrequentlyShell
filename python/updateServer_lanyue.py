@@ -20,6 +20,8 @@ import shutil
 
 import sys
 
+import time
+
 if len(sys.argv) < 2 or len(sys.argv) > 3:
     print("Usage: python updateServer_lanyue.py version")
     exit(1)
@@ -78,10 +80,10 @@ def main():
     os.system("rm -rf " + version)
     print("---------------------------------关闭服务器---------------------------------")
     close_server()
-    os.system("sleep 2")
+    time.sleep(3)
     print("---------------------------------更新jar包---------------------------------")
     update_code()
-    os.system("sleep 2")
+    time.sleep(3)
     print("---------------------------------修改版本号---------------------------------")
     change_version()
     print("---------------------------------开启服务器---------------------------------")
