@@ -26,7 +26,7 @@ serverBasePath = "/data/game/server/miracle-server/"
 # 配置表根目录
 dataBasePath = "/data/game/server/miracle-data/"
 # 目标版本位置
-run_base_url = "data/game/server/s1/"
+run_base_url = "/data/game/server/s1/"
 
 if len(sys.argv) < 2 or len(sys.argv) > 3:
     print("Usage: python tagVersion_lanyue.py version")

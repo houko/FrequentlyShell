@@ -39,7 +39,8 @@ version = sys.argv[1]
 
 
 def svn_up():
-    os.system("cd /root/version && svn up")
+    os.chdir("/root/version")
+    os.system("svn up")
 
 
 # 关服
