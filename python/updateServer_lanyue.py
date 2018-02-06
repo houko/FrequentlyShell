@@ -40,7 +40,8 @@ version = sys.argv[1]
 
 # 关服
 def close_server():
-    os.system("cd" + shell_path)
+    os.system("cd /root/version && svn up")
+    os.system("cd " + shell_path)
     os.system("sh " + shell_path + " all stop")
 
 
@@ -50,7 +51,6 @@ def update_code():
     os.chdir(target_jar_path)
     os.system("rm -rf *.jar")
     os.chdir("/root/version/" + version + "/server/core/" + version)
-    os.system("svn up")
     files = os.listdir(os.getcwd())
     for file in files:
         if file.endswith(".jar"):
