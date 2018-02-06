@@ -38,10 +38,13 @@ target_data_base_path = target_base_url + "data/"
 version = sys.argv[1]
 
 
+def svn_up():
+    os.system("cd /root/version && svn up")
+
+
 # 关服
 def close_server():
-    os.system("cd /root/version && svn up")
-    os.system("cd " + shell_path)
+    os.chdir(shell_path)
     os.system("sh " + shell_path + " all stop")
 
 
@@ -77,7 +80,8 @@ def start_server():
 
 
 def main():
-    os.system("rm -rf " + version)
+    print("---------------------------------更新代码---------------------------------")
+    svn_up()
     print("---------------------------------关闭服务器---------------------------------")
     close_server()
     time.sleep(3)
