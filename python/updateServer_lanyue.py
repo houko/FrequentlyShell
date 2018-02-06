@@ -46,7 +46,7 @@ def svn_up():
 # 关服
 def close_server():
     os.chdir(shell_path)
-    os.system("sh serverOptions all stop")
+    os.system("sh serverOptions.sh all stop")
 
 
 # 拷贝文件
@@ -78,7 +78,7 @@ def change_version():
 
 def start_server():
     os.chdir(shell_path)
-    os.system("sh serverOptions all start")
+    os.system("sh serverOptions.sh all start")
 
 
 def main():
