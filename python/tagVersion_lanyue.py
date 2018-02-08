@@ -11,7 +11,7 @@
  email: xiaomo@xiamoo.info
  QQ_NO: 83387856
  Date: 18/1/31 14:53
- Description: 更新蓝月传奇线上版本
+ Description: 更新蓝月传奇线上测试版本
  Copyright(©) 2017 by xiaomo.
 """
 
