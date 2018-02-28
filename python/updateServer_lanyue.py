@@ -53,7 +53,7 @@ def update_code():
     # 处理jar包
     os.chdir(target_jar_path)
     os.system("rm -rf *.jar")
-    os.chdir("/root/version/" + version + "/server/core/" + version)
+    os.chdir("/root/version/" + version + "/server/core/")
     files = os.listdir(os.getcwd())
     for file in files:
         if file.endswith(".jar"):

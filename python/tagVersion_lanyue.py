@@ -34,7 +34,7 @@ if len(sys.argv) < 2 or len(sys.argv) > 3:
 # 版本号
 version_num = sys.argv[1]
 # 目录版本的路径
-target_version_url = (versionBasePath + version_num + "/server/core/" + version_num)
+target_version_url = (versionBasePath + version_num + "/server/core/")
 # 游戏包jar
 game_server_url = serverBasePath + "game-codex/target/game-server-0.0.1.jar"
 # api包jar
@@ -57,9 +57,6 @@ def create_dir():
     os.makedirs("server", 0o700, True)
     os.chdir("server")
     os.makedirs("core", 0o700, True)
-    os.chdir("core")
-    os.makedirs(version, 0o700, True)
-    os.chdir(version)
 
 
 # 编译jar包
