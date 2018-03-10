@@ -39,6 +39,8 @@ target_version_url = (versionBasePath + version_num + "/server/core/")
 game_server_url = serverBasePath + "game-codex/target/game-server-0.0.1.jar"
 # api包jar
 api_file_list = serverBasePath + "game-api/target/game-api-0.0.1.jar"
+# script
+script_file_list = serverBasePath + "game-script/target/game-script-0.0.1.jar"
 
 
 # 创建文件夹
@@ -89,6 +91,8 @@ def copy_jar():
     shutil.copy(game_server_url, target_version_url)
     # 拷贝 api包
     shutil.copy(api_file_list, target_version_url)
+    # 拷贝script
+    shutil.copy(script_file_list, target_version_url)
 
 
 # 拷贝jqr包
