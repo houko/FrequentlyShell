@@ -36,7 +36,7 @@ version_num = sys.argv[1]
 # 目录版本的路径
 target_version_url = (versionBasePath + version_num + "/server/core/")
 # 游戏包jar
-game_server_url = serverBasePath + "game-codex/target/game-server-0.0.1.jar"
+game_server_url = serverBasePath + "game-server/target/game-server-0.0.1.jar"
 # api包jar
 api_file_list = serverBasePath + "game-api/target/game-api-0.0.1.jar"
 # script
@@ -108,6 +108,8 @@ def copy_data():
 # 修改版本号
 def change_version():
     os.chdir(run_base_url)
+    shutil.copy('version', versionBasePath + version_num + '/server')
+    os.chdir(versionBasePath + version_num + '/server')
     with open('version', 'w', encoding='utf-8') as f:
         f.write(version_num)
 
