@@ -102,7 +102,7 @@ def copy_data():
     target = versionBasePath + version_num + "/server/data"
     shutil.copytree(dataBasePath, target)
     os.chdir(target)
-    os.system("rm -rf .git")
+    os.system("rm -rf .svn")
 
 
 # 修改版本号
