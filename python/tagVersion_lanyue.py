@@ -98,7 +98,7 @@ def copy_jar():
 # 拷贝jqr包
 def copy_data():
     os.chdir(dataBasePath)
-    os.system("git pull")
+    os.system("svn up")
     target = versionBasePath + version_num + "/server/data"
     shutil.copytree(dataBasePath, target)
     os.chdir(target)
