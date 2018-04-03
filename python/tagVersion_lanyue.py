@@ -5,12 +5,13 @@
  把今天最好的表现当作明天最新的起点．．～
  いま 最高の表現 として 明日最新の始発．．～
  Today the best performance  as tomorrow newest starter!
+ Created by IntelliJ IDEA.
  author: xiaomo
  github: https://github.com/syoubaku
  email: xiaomo@xiamoo.info
  QQ_NO: 83387856
  Date: 18/1/31 14:53
- Description: 更新蓝月传奇线上测试版本
+ Description: 更新蓝月传奇线上版本
  Copyright(©) 2017 by xiaomo.
 """
 
@@ -23,7 +24,7 @@ versionBasePath = "/data/game/server/miracle-version/"
 # 服务端代码根目录
 serverBasePath = "/data/game/server/miracle-server/"
 # 配置表根目录
-dataBasePath = "/data/game/server/miracle-data/"
+dataBasePath = "/data/game/server/data/"
 # 目标版本位置
 run_base_url = "/data/game/server/s1/"
 
@@ -55,7 +56,6 @@ def create_dir():
         os.makedirs(version, 0o700, False)
 
     os.chdir(version)
-    os.makedirs("libs", 0o700, True)
     os.makedirs("server", 0o700, True)
     os.chdir("server")
     os.makedirs("core", 0o700, True)
@@ -73,12 +73,6 @@ def compile_jar():
 def tag_version():
     # 打服务端代码的tag
     os.chdir(serverBasePath)
-    os.system("git tag -l | xargs git tag -d")
-    os.system(" git tag " + version_num)
-    os.system("git push --tags ")
-
-    # 打配置表的tag
-    os.chdir(dataBasePath)
     os.system("git tag -l | xargs git tag -d")
     os.system(" git tag " + version_num)
     os.system("git push --tags ")
@@ -102,13 +96,13 @@ def copy_data():
     target = versionBasePath + version_num + "/server/data"
     shutil.copytree(dataBasePath, target)
     os.chdir(target)
-    os.system("rm -rf .svn")
+    os.system("find . -name '.svn'  | xargs rm -rf")
 
 
 # 修改版本号
 def change_version():
     os.chdir(run_base_url)
-    shutil.copy('version', versionBasePath + version_num + '/server')
+    shutil.copy(run_base_url + 'version', versionBasePath + version_num + '/server')
     os.chdir(versionBasePath + version_num + '/server')
     with open('version', 'w', encoding='utf-8') as f:
         f.write(version_num)
