@@ -5,12 +5,13 @@
  把今天最好的表现当作明天最新的起点．．～
  いま 最高の表現 として 明日最新の始発．．～
  Today the best performance  as tomorrow newest starter!
+ Created by IntelliJ IDEA.
  author: xiaomo
  github: https://github.com/syoubaku
  email: xiaomo@xiamoo.info
  QQ_NO: 83387856
  Date: 18/1/31 14:53
- Description: 更新蓝月传奇线上测试版本
+ Description: 更新蓝月传奇线上版本
  Copyright(©) 2017 by xiaomo.
 """
 
@@ -23,7 +24,7 @@ versionBasePath = "/data/game/server/miracle-version/"
 # 服务端代码根目录
 serverBasePath = "/data/game/server/miracle-server/"
 # 配置表根目录
-dataBasePath = "/data/game/server/miracle-data/"
+dataBasePath = "/data/game/server/data/"
 # 目标版本位置
 run_base_url = "/data/game/server/s1/"
 
@@ -34,11 +35,13 @@ if len(sys.argv) < 2 or len(sys.argv) > 3:
 # 版本号
 version_num = sys.argv[1]
 # 目录版本的路径
-target_version_url = (versionBasePath + version_num + "/server/core/" + version_num)
+target_version_url = (versionBasePath + version_num + "/server/core/")
 # 游戏包jar
-game_server_url = serverBasePath + "game-codex/target/game-server-0.0.1.jar"
+game_server_url = serverBasePath + "game-server/target/game-server-0.0.1.jar"
 # api包jar
 api_file_list = serverBasePath + "game-api/target/game-api-0.0.1.jar"
+# script
+script_file_list = serverBasePath + "game-script/target/game-script-0.0.1.jar"
 
 
 # 创建文件夹
@@ -53,13 +56,9 @@ def create_dir():
         os.makedirs(version, 0o700, False)
 
     os.chdir(version)
-    os.makedirs("libs", 0o700, True)
     os.makedirs("server", 0o700, True)
     os.chdir("server")
     os.makedirs("core", 0o700, True)
-    os.chdir("core")
-    os.makedirs(version, 0o700, True)
-    os.chdir(version)
 
 
 # 编译jar包
@@ -78,12 +77,6 @@ def tag_version():
     os.system(" git tag " + version_num)
     os.system("git push --tags ")
 
-    # 打配置表的tag
-    os.chdir(dataBasePath)
-    os.system("git tag -l | xargs git tag -d")
-    os.system(" git tag " + version_num)
-    os.system("git push --tags ")
-
 
 # 拷贝Jar包
 def copy_jar():
@@ -92,21 +85,25 @@ def copy_jar():
     shutil.copy(game_server_url, target_version_url)
     # 拷贝 api包
     shutil.copy(api_file_list, target_version_url)
+    # 拷贝script
+    shutil.copy(script_file_list, target_version_url)
 
 
 # 拷贝jqr包
 def copy_data():
     os.chdir(dataBasePath)
-    os.system("git pull")
+    os.system("svn up")
     target = versionBasePath + version_num + "/server/data"
     shutil.copytree(dataBasePath, target)
     os.chdir(target)
-    os.system("rm -rf .git")
+    os.system("find . -name '.svn'  | xargs rm -rf")
 
 
 # 修改版本号
 def change_version():
     os.chdir(run_base_url)
+    shutil.copy(run_base_url + 'version', versionBasePath + version_num + '/server')
+    os.chdir(versionBasePath + version_num + '/server')
     with open('version', 'w', encoding='utf-8') as f:
         f.write(version_num)
 
