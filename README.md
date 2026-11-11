@@ -1,3 +1,5 @@
+[![X](https://img.shields.io/badge/X-%40suzukaze__haduki-000000?logo=x&logoColor=white)](https://x.com/suzukaze_haduki) [![GitHub Sponsors](https://img.shields.io/badge/GitHub%20Sponsors-ea4aaa?logo=githubsponsors&logoColor=white)](https://github.com/sponsors/houko)
+
 # 1. update9998.sh
 该脚本的作用是将上传的新版本zip包解压并更新到服务器中 。9998是我们的外网服务器,以前更版本总要是手动去操作，不熟悉的话要10分钟甚至更久，熟悉的人至少也得花3分钟。而我花了半个小时写了这个脚本，更新版本只需要1分钟，甚至更少。
 
